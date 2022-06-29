@@ -5,9 +5,7 @@ sieve (x:xs) = x : sieve (filter (\z -> z `mod` x /= 0) xs)
 
 -- Large factors <= n
 lfacs :: Int -> [Int]
-lfacs n = [lfac x n | x <- sieve [2..n]]
-    where
-        lfac x n = last (takeWhile (< n) (scanl (*) 1 (repeat x)))
+lfacs n = [last (takeWhile (< n) (scanl1 (*) (repeat x))) | x <- sieve [2..n]]
 
 solution = product (lfacs 20)
 
